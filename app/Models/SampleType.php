@@ -11,9 +11,9 @@ class SampleType extends Model
     protected $primaryKey = "id_sample_type";
 
     public function analysis(){
-        return $this->hasMany('App\Models\Sample','analysis_id','id_analysis');
+        return $this->hasMany('App\Models\Sample','sample_type_id','id_sample_type');
     }
     public function parameter(){
-        return $this->hasMany('App\Models\Parameter','parameter_id','id_parameter');
+        return $this->hasMany('App\Models\Parameter','sample_type_id','id_sample_type');
     }
 }

@@ -14,6 +14,6 @@ class PopulationType extends Model
     const UPDATED_AT = 'updated_at';
 
     public function population(){
-        return $this->hasMany('App\Models\Population','population_id','id_population');
+        return $this->hasMany('App\Models\Population','population_type_id','id_population_type');
     }
 }

@@ -12,6 +12,6 @@ class WaterType extends Model
 
 
     public function analysis(){
-        return $this->hasMany('App\Models\Sample','analysis_id','id_analysis');
+        return $this->hasMany('App\Models\Sample','water_type_id','id_water_type');
     }
 }

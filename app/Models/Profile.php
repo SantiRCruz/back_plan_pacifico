@@ -14,7 +14,7 @@ class Profile extends Model
     const UPDATED_AT = 'updated_at';
 
     public function user(){
-        return $this->hasMany('App\Models\User','user_id','id_user');
+        return $this->hasMany('App\Models\User','profile_id','id_profile');
     }
 
 }

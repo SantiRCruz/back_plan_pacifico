@@ -18,6 +18,6 @@ class Sample extends Model
     }
 
     public function measure(){
-        return $this->hasMany('App\Models\Measure','measure_id','id_measure');
+        return $this->hasMany('App\Models\Measure','sample_id','id_sample');
     }
 }

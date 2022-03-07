@@ -21,7 +21,7 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\Profile','profile_id','id_profile');
     }
     public function analysis(){
-        return $this->hasMany('App\Models\Sample','analysis_id','id_analysis');
+        return $this->hasMany('App\Models\Sample','user_id','id_user');
     }
 
     /**

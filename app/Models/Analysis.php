@@ -26,9 +26,9 @@ class Analysis extends Model
         return $this->belongsTo('App\Models\User','water_type_id','id_water_type');
     }
     public function sample(){
-        return $this->hasMany('App\Models\Sample','sample_id','id_sample');
+        return $this->hasMany('App\Models\Sample','analysis_id','id_analysis');
     }
     public function result(){
-        return $this->hasMany('App\Models\Result','result_id','id_result');
+        return $this->hasMany('App\Models\Result','analysis_id','id_analysis');
     }
 }

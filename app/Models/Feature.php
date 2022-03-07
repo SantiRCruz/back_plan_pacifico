@@ -12,6 +12,6 @@ class Feature extends Model
 
 
     public function parameter(){
-        return $this->hasMany('App\Models\Parameter','parameter_id','id_parameter');
+        return $this->hasMany('App\Models\Parameter','feature_id','id_feature');
     }
 }

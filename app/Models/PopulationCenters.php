@@ -15,7 +15,7 @@ class PopulationCenters extends Model
         return $this->belongsTo('App\Models\Municipality','municipality_id','id_municipality');
     }
     public function population(){
-        return $this->hasMany('App\Models\Population','population_id','id_population');
+        return $this->hasMany('App\Models\Population','populated_center_id','id_populated_center');
     }
 
 }

@@ -12,6 +12,6 @@ class Department extends Model
 
 
     public function municipality(){
-        return $this->hasMany('App\Models\Municipality','municipality_id','id_municipality');
+        return $this->hasMany('App\Models\Municipality','department_id','id_department');
     }
 }

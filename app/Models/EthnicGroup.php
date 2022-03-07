@@ -14,6 +14,6 @@ class EthnicGroup extends Model
     const UPDATED_AT = 'updated_at';
 
     public function population(){
-        return $this->hasMany('App\Models\Population','population_id','id_population');
+        return $this->hasMany('App\Models\Population','ethnic_group_id','id_ethnic_group');
     }
 }

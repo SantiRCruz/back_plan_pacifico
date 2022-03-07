@@ -18,9 +18,9 @@ class Parameter extends Model
         return $this->belongsTo('App\Models\SampleType','sample_type_id','id_sample_type');
     }
     public function result(){
-        return $this->hasMany('App\Models\Result','result_id','id_result');
+        return $this->hasMany('App\Models\Result','parameter_id','id_parameter');
     }
     public function sample(){
-        return $this->hasMany('App\Models\Sample','sample_id','id_sample');
+        return $this->hasMany('App\Models\Sample','parameter_id','id_parameter');
     }
 }

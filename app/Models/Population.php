@@ -20,9 +20,9 @@ class Population extends Model
         return $this->belongsTo('App\Models\EthinicGroup','ethnic_group_id','id_ethnic_group');
     }
     public function populationType(){
-        return $this->belongsTo('App\Models\PopulationType','ethnic_group_id','id_ethnic_group');
+        return $this->belongsTo('App\Models\PopulationType','population_type_id','id_population_type');
     }
     public function analysis(){
-        return $this->hasMany('App\Models\Sample','sample_id','id_sample');
+        return $this->hasMany('App\Models\Sample','population_id','id_population');
     }
 }

@@ -10,9 +10,6 @@ class EthnicGroup extends Model
     protected $table = 'ethnic_groups';
     protected $primaryKey = 'id_ethnic_group';
 
-    const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'updated_at';
-
     public function population(){
         return $this->hasMany('App\Models\Population','ethnic_group_id','id_ethnic_group');
     }

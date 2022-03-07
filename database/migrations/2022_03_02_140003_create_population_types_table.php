@@ -16,7 +16,6 @@ class CreatePopulationTypesTable extends Migration
         Schema::create('population_types', function (Blueprint $table) {
             $table->id('id_population_type');
             $table->String('population_type_name',100);
-            $table->timestamps();
         });
     }
 

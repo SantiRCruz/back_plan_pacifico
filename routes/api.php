@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\profileController;
+use App\Http\Controllers\sampleController;
 use App\Http\Controllers\userController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -14,5 +15,13 @@ Route::post('/almacenar_usuario', [userController::class, 'store']);
 Route::get('/listar_usuarios', [userController::class, 'index']);
 
 Route::get('/listar_perfiles', [profileController::class, 'index']);
+
+
+Route::get('/listar_muestras', [sampleController::class, 'index']);
+Route::post('/almacenar_muestras', [sampleController::class , 'store']);
+Route::get('/lista_muestra/{id_sample}',[sampleController::class , 'show']);
+Route::put('/actualizar_muestra/{id_sample}', [sampleController::class, 'update']);
+Route::delete('/eliminar_muestra/{id_sample}', [sampleController::class, 'destroy']);
+
 
 

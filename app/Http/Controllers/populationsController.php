@@ -1,0 +1,164 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Population;
+
+class populationsController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return Population::all();
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $validations = Population::make($request->all()[
+
+        ]);
+
+        if(!$validations->fails()){
+            $population = new Population;
+            $population->populated_center_id  = $request ->populated_center_id;
+            $population->ethnic_group_id      = $request ->ethnic_group_id;
+            $population->population_type_id   = $request ->population_type_id;
+            $population->length               = $request ->length;
+            $population->latitude             = $request ->latitude;
+            $population->altitude             = $request -> altitude;
+            $population->photography          = $request ->photography;
+            $population->inhabitants_number   = $request ->inhabitants_number;
+            $population->surface_sources      = $request ->surface_sources;
+            $population->underground_sources  = $request ->underground_sources;
+            $population->catchment_type       = $request ->catchment_type;
+
+            $population->save();
+            $this->estructura_api->setResultado($population);
+            $this->estructura_api->settEstado('SUC-001', 'sucess', 'Poblacion Guardada Correctamente');
+
+        }else{
+            $this->estructura_api->setEstado('ERR-001', 'error', $validations->error());
+            $this->estructura_api->setResultado(null);
+        }
+        return response()->json($this->estructura_api->toResponse(null));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id_population)
+    {
+     $population = Population::where('id_population', $id_population)
+                ->first();
+    if(isset($population)){
+
+    $this->estructura_api->setResultado($population);
+    }else{
+
+    $this->estructura_api->setEstado('INF-001', 'INF', 'No se encontro la poblacion');
+    $this->estructura_api->setResultado(null);
+
+    }
+    return response()->json($this->estructura_api->toResponse(null));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id_population)
+    {
+     $validations = Population::make($request->all(),[
+
+     ]);
+
+     if(!$validations->fails()){
+        $population = Population::find($id_population);
+      if(isset($population)){
+          $population = new Population;
+          $population->populated_center_id  = $request ->populated_center_id;
+          $population->ethnic_group_id      = $request ->ethnic_group_id;
+          $population->population_type_id   = $request ->population_type_id;
+          $population->length               = $request ->length;
+          $population->latitude             = $request ->latitude;
+          $population->altitude             = $request -> altitude;
+          $population->photography          = $request ->photography;
+          $population->inhabitants_number   = $request ->inhabitants_number;
+          $population->surface_sources      = $request ->surface_sources;
+          $population->underground_sources  = $request ->underground_sources;
+          $population->catchment_type       = $request ->catchment_type;
+
+           $population->save();
+
+    $this->estructura_api->setResultado($population);
+    $this->estructura_api->setEstado('SUC-001', 'sucess', 'Poblacion Actualizada correctamente');
+      }else{
+    $this->estructura_api->setEstado('ERR-001', 'error', 'Poblacion no encontrada');
+      }
+    }else{
+        $this->estructura_api->setEstado('ERR-001', 'error' , $validations->error());
+
+    }
+    return response()->json($this->estructura_api->toResponse(null));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id_population)
+    {
+     $population = Population::find($id_population);
+
+     if(isset($population)){
+         $population->delete();
+
+    $this->estructura_api->setResultado($population);
+    $this->estructura_api->setEstado('SUC-001', 'sucesss', 'Poblacion eliminada Correctamente');
+     }else{
+    $this->estructura_api->setEstado('ERR-001', 'error', 'Poblacion no Encontrada');
+    $this->estructura_api->setResultado(null);
+     }
+     return response()->json($this->estructura_api->toResponse(null));
+    }
+}

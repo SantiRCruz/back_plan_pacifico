@@ -17,8 +17,16 @@ class userController extends Controller
     public function index()
     {
         //
-        $user = User::get();
-        return $user;
+        $user = User::select("id_user", "usernames", "user_last_names", "user_nick", "phone_number", "identification", "email", "profiles.name_profile", "profile_id")
+            ->join("profiles", "profile_id", "id_profile")->get();
+
+        if (count($user) > 0) {
+            $this->estructura_api->setEstado('SUC-001', 'success', 'Usuario registrado correctamente');
+            $this->estructura_api->setResultado($user);
+        } else {
+            $this->estructura_api->setResultado("No existen usuarios registrados");
+        }
+        return response()->json($this->estructura_api->toResponse(null));
     }
 
     /**
@@ -39,17 +47,15 @@ class userController extends Controller
      */
     public function store(Request $request)
     {
-        //     // return $request;
-
         $validations = Validator::make($request->all(), [
-            'usernames'        => 'required',
-            'user_last_names'  => 'required',
-            'identification'   => 'required|unique:users',
-            'phone_number'     => 'required ',
-            'email'            => 'required|unique:users', 
-            'password'         => 'required',
-            'profile_id'       => 'required',
-            'user_nick'        => 'required|unique:users'
+            'usernames'           => 'required',
+            'user_last_names'     => 'required',
+            'identification'      => 'required|unique:users',
+            'phone_number'        => 'required',
+            'email'               => 'required|unique:users',
+            'password'            => 'required',
+            'profile_id'          => 'required',
+            'user_nick'           => 'required|unique:users'
         ]);
 
         if (!$validations->fails()) {
@@ -103,9 +109,41 @@ class userController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_user)
     {
-        //
+        $validations = Validator::make($request->all(), [
+            'usernames'           => 'required',
+            'user_last_names'     => 'required',
+            'identification'      => 'required',
+            'phone_number'        => 'required',
+            'email'               => 'required',
+            'password'            => 'required',
+            'profile_id'          => 'required',
+            'user_nick'           => 'required'
+        ]);
+        if (!$validations->fails()) {
+            $user_modified = User::find($id_user);
+            if (isset($user_modified)) {
+                $user_modified ->usernames            =          $request->usernames;
+                $user_modified ->user_last_names      =          $request->user_last_names;
+                $user_modified ->identification       =          $request->identification;
+                $user_modified ->phone_number         =          $request->phone_number;
+                $user_modified ->email                =          $request->email;
+                $user_modified ->password             =          $request->password;
+                $user_modified ->profile_id           =          $request->profile_id;
+                $user_modified ->user_nick            =          $request->user_nick;
+
+                $user_modified->update();
+                $this->estructura_api->setResultado($user_modified);
+                $this->estructura_api->setEstado('SUC-001', 'success', 'Usuario modificado correctamente');
+            } else {
+                $this->estructura_api->setEstado('ERR-001', 'error', 'Usuario no encontrado');
+                $this->estructura_api->setResultado(null);
+            }
+        } else {
+            $this->estructura_api->setEstado('ERR-000', 'error', $validations->errors());
+        }
+        return response()->json($this->estructura_api->toResponse(null));
     }
 
     /**
@@ -116,34 +154,17 @@ class userController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
-    public function almacenar(Request $request) {
-        //     // return $request;
+        // $zone = Zona::find($id_zone);
+        // if (isset($zone)) {
+        //     $zone->delete();
+        //     $this->estructura_api->setEstado('SUC-001', 'success', 'Zona eliminada correctamente');
+        //     $this->estructura_api->setResultado(null);
+        // } else {
+        //     $this->estructura_api->setEstado('ERR-001', 'error', 'No se encontró esta zona');
+        //     $this->estructura_api->setResultado(null);
+        // }
+        // $this->estructura_api->setResultado(null);
+        // return response()->json($this->estructura_api->toResponse(null));
 
-
-        $validations = Validator::make($request->all(), [
-   
-        ]);
-
-        if (!$validations->fails()) {
-            $user = new User();
-            $user->usernames          =      $request->usernames;
-            $user->user_last_names    =      $request->user_last_names;
-            $user->identification     =      $request->identification;
-            $user->phone_number       =      $request->phone_number;
-            $user->email              =      $request->email;
-            $user->password           =      $request->password;
-            $user->profile_id         =      $request->profile_id;
-            $user->user_nick          =      $request->user_nick;
-
-            $user->save();
-            $this->estructura_api->setEstado('SUC-001', 'success', 'Usuario registrado correctamente');
-            $this->estructura_api->setResultado($user);
-        } else {
-            $this->estructura_api->setEstado("ERR-00", 'error', $validations->errors());
-            $this->estructura_api->setResultado(null);
-        }
-        return response()->json($this->estructura_api->toResponse(null));
     }
 }

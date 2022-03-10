@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('/almacenar_usuario', [userController::class, 'store']);
 Route::get('/listar_usuarios', [userController::class, 'index']);
 Route::put('/modificar_usuario/{id_user}', [userController::class, 'update']);
+Route::get('/mostrar_usuario/{id_user}', [userController::class, 'show']);
+Route::delete('/eliminar_usuario/{id_user}', [userController::class, 'destroy']);
 //RUTAS PERFIL
 Route::get('/listar_perfiles', [profileController::class, 'index']);
 

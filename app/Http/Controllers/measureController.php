@@ -37,7 +37,9 @@ class measureController extends Controller
     public function store(Request $request)
     {
         $validations = Validator::make($request->all(),[
-
+          'sample_id'  => 'required',
+          'value'     => 'required',
+          'register_date' => 'required'
         ]);
      if(!$validations->fails()){
 
@@ -52,7 +54,7 @@ class measureController extends Controller
         $this->estructura_api->setEstado('SUC-001', 'sucess', 'Medida Registrada Correctamente');
 
      }else{
-         $this->estructura_api->setEstado('ERR-000', 'error', $validations->error());
+         $this->estructura_api->setEstado('ERR-000', 'error', $validations->errors());
          $this->estructura_api->setResultado(null);
      }
 
@@ -102,7 +104,9 @@ class measureController extends Controller
     public function update(Request $request, $id_measure)
     {
      $validation = Validator::make($request->all(),[
-
+        'sample_id'  => 'required',
+        'value'     => 'required',
+        'register_date' => 'required'
      ]);
      if(!$validation->fails()){
     $measure = Measure::find($id_measure);

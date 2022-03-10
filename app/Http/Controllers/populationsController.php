@@ -36,18 +36,18 @@ class populationsController extends Controller
      */
     public function store(Request $request)
     {
-        $validations = Validator::make($request->all(),[
-         "populated_center_id" => "required",
-         "ethnic_group_id"     => "required",
-         "population_type_id"  =>  "required",
-         "length"              => "required",
-         "latitude"            => "required",
-         "altitude"            => "required",
-         "photography"         => "required",
-         "inhabitants_number"  =>"required",
-         "surface_sources"     =>"required",
-         "underground_sources" => "required",
-         "catchment_type"      =>"required",
+        $validations = Validator::make($request->all(), [
+         'populated_center_id' => 'required',
+         'ethnic_group_id'     => 'required',
+         'population_type_id'  =>  'required',
+         'length'              => 'required|unique:populations',
+         'latitude'            => 'required|unique:populations',
+         'altitude'           => 'required|unique:populations',
+         'photography'         => 'required',
+         'inhabitants_number'  =>'required',
+         'surface_sources'     =>'required',
+         'underground_sources' => 'required',
+         'catchment_type'      =>'required'
 
         ]);
 
@@ -70,7 +70,7 @@ class populationsController extends Controller
             $this->estructura_api->setEstado('SUC-001', 'sucess', 'Poblacion Guardada Correctamente');
 
         }else{
-            $this->estructura_api->setEstado('ERR-000', 'error', $validations->error());
+            $this->estructura_api->setEstado('ERR-000', 'error', $validations->errors());
             $this->estructura_api->setResultado(null);
         }
         return response()->json($this->estructura_api->toResponse(null));
@@ -120,6 +120,17 @@ class populationsController extends Controller
     public function update(Request $request, $id_population)
     {
         $validations = Validator::make($request->all(),[
+            'populated_center_id' => 'required',
+            'ethnic_group_id'     => 'required',
+            'population_type_id'  =>  'required',
+            'length'              => 'required|unique:populations',
+            'latitude'            => 'required|unique:populations',
+            'altitude'           => 'required|unique:populations',
+            'photography'         => 'required',
+            'inhabitants_number'  =>'required',
+            'surface_sources'     =>'required',
+            'underground_sources' => 'required',
+            'catchment_type'      =>'required'
 
         ]);
         if (!$validations->fails()) {
@@ -146,7 +157,7 @@ class populationsController extends Controller
                $this->estructura_api->setEstado('ERR-000', 'error', 'no existe esta Poblacion');
            }
        } else {
-           $this->estructura_api->setEstado('ERR-000', 'error', $validaciones->errors());
+           $this->estructura_api->setEstado('ERR-000', 'error', $validations->errors());
        }
        return response()->json($this->estructura_api->toResponse(null));
 

@@ -37,7 +37,9 @@ class sampleController extends Controller
     public function store(Request $request)
     {
       $validation = Validator::make($request->all(),[
-
+      'parameter_id' => 'required',
+      'analysis_id' =>  'required',
+      'average'    =>   'required',
       ]);
       if(!$validation->fails()){
           $sample = new Sample;
@@ -49,7 +51,7 @@ class sampleController extends Controller
           $this->estructura_api->setResultado($sample);
           $this->estructura_api->setEstado('SUC-001', 'sucesss', 'Muestra Registrada Correctamente');
       }else{
-          $this->estructura_api->setEstado("ERR-00", 'error', $validation->error());
+          $this->estructura_api->setEstado("ERR-00", 'error', $validation->errors());
           $this->estructura_api->setResultado(null);
       }
       return response()->json($this->estructura_api->toResponse(null));
@@ -97,7 +99,9 @@ class sampleController extends Controller
     public function update(Request $request, $id_sample)
     {
      $validation = Validator::make($request->all(),[
-
+        'parameter_id' => 'required',
+        'analysis_id' =>  'required',
+        'average'    =>   'required',
      ]);
      if(!$validation->fails()){
 

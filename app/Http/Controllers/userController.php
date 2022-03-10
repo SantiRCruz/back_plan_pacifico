@@ -86,9 +86,17 @@ class userController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id_user)
     {
-        //
+    $user = User::where('id_user', $id_user)
+                ->first();
+    if(isset($user)){
+     $this->estructura_api->setResultado($user);
+    }else{
+        $this->estructura_api->setEstado('ERR-000', 'error', 'Usuario no Encontrado');
+        $this->estructura_api->setResultado(null);
+    }
+    return response()->json($this->estructura_api->toResponse(null));
     }
 
     /**
@@ -133,7 +141,7 @@ class userController extends Controller
                 $user_modified ->profile_id           =          $request->profile_id;
                 $user_modified ->user_nick            =          $request->user_nick;
 
-                $user_modified->update();
+                $user_modified->save();
                 $this->estructura_api->setResultado($user_modified);
                 $this->estructura_api->setEstado('SUC-001', 'success', 'Usuario modificado correctamente');
             } else {
@@ -152,19 +160,16 @@ class userController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id_user)
     {
-        // $zone = Zona::find($id_zone);
-        // if (isset($zone)) {
-        //     $zone->delete();
-        //     $this->estructura_api->setEstado('SUC-001', 'success', 'Zona eliminada correctamente');
-        //     $this->estructura_api->setResultado(null);
-        // } else {
-        //     $this->estructura_api->setEstado('ERR-001', 'error', 'No se encontró esta zona');
-        //     $this->estructura_api->setResultado(null);
-        // }
-        // $this->estructura_api->setResultado(null);
-        // return response()->json($this->estructura_api->toResponse(null));
-
+     $user = User::find($id_user);
+     if(isset($user)){
+        $user->delete();
+    $this->estructura_api->setResultado($user);
+    $this->estructura_api->setEstado('SUC-001', 'sucess', 'Usuario eliminado correctamente');
+     }else{
+         $this->estructura_api->setEstado('ERR-000', 'error', 'Usuario no encontrado');
+     }
+      return response()->json($this->estructura_api->toResponse(null));
     }
 }

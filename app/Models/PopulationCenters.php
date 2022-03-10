@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PopulationCenters extends Model
 {
-    protected $table = 'population_centers';
+    protected $table = 'populated_centers';
     protected $primaryKey = 'id_populated_center';
 
 

@@ -1,11 +1,17 @@
 <?php
 
-use App\Http\Controllers\ethnic_groups;
+use App\Http\Controllers\departmentsController;
+use App\Http\Controllers\ethnicGroupsController;
+use App\Http\Controllers\featuresController;
 use App\Http\Controllers\profileController;
 use App\Http\Controllers\sampleController;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\populationsController;
 use App\Http\Controllers\measureController;
+use App\Http\Controllers\municipalitiesController;
+use App\Http\Controllers\parametersController;
+use App\Http\Controllers\populatedCentersController;
+use App\Http\Controllers\waterTypesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +48,16 @@ Route::get('/lista_medida/{id_measure}', [measureController::class, 'show']);
 Route::put('/actualizar_medida/{id_measure}',[measureController::class,'update']);
 Route::delete('/eliminar_medida/{id_measure}',[measureController::class,'destroy']);
 
-//RUTAS GRUPO ETNICO
-Route::get('/listar_grupos_etnicos', [ethnic_groups::class, 'index']);
+//RUTAS DATOS PARAMETRIZADOS
+Route::get('/listar_departments', [departmentsController::class, 'index']);
+Route::get('/listar_caracteristicas', [featuresController::class, 'index']);
+Route::get('/listar_municipios', [municipalitiesController::class, 'index']);
+Route::get('/listar_parametros', [parametersController::class, 'index']);
+Route::get('/listar_centros_poblados', [populatedCentersController::class, 'index']);
+Route::get('/listar_tipos_agua', [waterTypesController::class, 'index']);
+Route::get('/listar_grupos_etnicos', [ethnicGroupsController ::class, 'index']);
+Route::get('/listar_tipos_modulo', [ethnicGroupsController ::class, 'index']);
+
+
+// Route::get('/departments', [::class, 'index']);
 

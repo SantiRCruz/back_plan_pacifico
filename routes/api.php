@@ -46,7 +46,7 @@ Route::get('/lista_medida/{id_measure}', [measureController::class, 'show']);
 Route::put('/actualizar_medida/{id_measure}',[measureController::class,'update']);
 Route::delete('/eliminar_medida/{id_measure}',[measureController::class,'destroy']);
 
-//RUTAS GRUPO ETNICO
+//RUTAS DATOS PARAMETRIZADOS
 Route::get('/listar_departments', [departmentsController::class, 'index']);
 Route::get('/listar_caracteristicas', [featuresController::class, 'index']);
 Route::get('/listar_municipios', [municipalitiesController::class, 'index']);

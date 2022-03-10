@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ethnic_groups;
 use App\Http\Controllers\profileController;
 use App\Http\Controllers\sampleController;
 use App\Http\Controllers\userController;
@@ -12,10 +13,11 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-
+// RUTAS USUARIO
 Route::post('/almacenar_usuario', [userController::class, 'store']);
 Route::get('/listar_usuarios', [userController::class, 'index']);
-
+Route::put('/modificar_usuario/{id_user}', [userController::class, 'update']);
+//RUTAS PERFIL
 Route::get('/listar_perfiles', [profileController::class, 'index']);
 
 
@@ -38,5 +40,6 @@ Route::get('/lista_medida/{id_measure}', [measureController::class, 'show']);
 Route::put('/actualizar_medida/{id_measure}',[measureController::class,'update']);
 Route::delete('/eliminar_medida/{id_measure}',[measureController::class,'destroy']);
 
-
+//RUTAS GRUPO ETNICO
+Route::get('/listar_grupos_etnicos', [ethnic_groups::class, 'index']);
 

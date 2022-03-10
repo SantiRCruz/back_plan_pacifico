@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Population;
+use Illuminate\Support\Facades\Validator;
 
 class populationsController extends Controller
 {
@@ -35,8 +36,8 @@ class populationsController extends Controller
      */
     public function store(Request $request)
     {
-        $validations = Population::make($request->all()[
-
+        $validations = Validator::make($request->all(),[
+           
         ]);
 
         if(!$validations->fails()){
@@ -55,10 +56,10 @@ class populationsController extends Controller
 
             $population->save();
             $this->estructura_api->setResultado($population);
-            $this->estructura_api->settEstado('SUC-001', 'sucess', 'Poblacion Guardada Correctamente');
+            $this->estructura_api->setEstado('SUC-001', 'sucess', 'Poblacion Guardada Correctamente');
 
         }else{
-            $this->estructura_api->setEstado('ERR-001', 'error', $validations->error());
+            $this->estructura_api->setEstado('ERR-000', 'error', $validations->error());
             $this->estructura_api->setResultado(null);
         }
         return response()->json($this->estructura_api->toResponse(null));
@@ -75,6 +76,7 @@ class populationsController extends Controller
      $population = Population::where('id_population', $id_population)
                 ->first();
     if(isset($population)){
+
 
     $this->estructura_api->setResultado($population);
     }else{
@@ -106,40 +108,38 @@ class populationsController extends Controller
      */
     public function update(Request $request, $id_population)
     {
-     $validations = Population::make($request->all(),[
+        $validations = Validator::make($request->all(),[
 
-     ]);
+        ]);
+        if (!$validations->fails()) {
+           $population = Population::find($id_population);
+           if (isset($population)) {
 
-     if(!$validations->fails()){
-        $population = Population::find($id_population);
-      if(isset($population)){
-          $population = new Population;
-          $population->populated_center_id  = $request ->populated_center_id;
-          $population->ethnic_group_id      = $request ->ethnic_group_id;
-          $population->population_type_id   = $request ->population_type_id;
-          $population->length               = $request ->length;
-          $population->latitude             = $request ->latitude;
-          $population->altitude             = $request -> altitude;
-          $population->photography          = $request ->photography;
-          $population->inhabitants_number   = $request ->inhabitants_number;
-          $population->surface_sources      = $request ->surface_sources;
-          $population->underground_sources  = $request ->underground_sources;
-          $population->catchment_type       = $request ->catchment_type;
+            $population->populated_center_id  = $request ->populated_center_id;
+            $population->ethnic_group_id      = $request ->ethnic_group_id;
+            $population->population_type_id   = $request ->population_type_id;
+            $population->length               = $request ->length;
+            $population->latitude             = $request ->latitude;
+            $population->altitude             = $request -> altitude;
+            $population->photography          = $request ->photography;
+            $population->inhabitants_number   = $request ->inhabitants_number;
+            $population->surface_sources      = $request ->surface_sources;
+            $population->underground_sources  = $request ->underground_sources;
+            $population->catchment_type       = $request ->catchment_type;
 
-           $population->save();
+            $population->save();
 
-    $this->estructura_api->setResultado($population);
-    $this->estructura_api->setEstado('SUC-001', 'sucess', 'Poblacion Actualizada correctamente');
-      }else{
-    $this->estructura_api->setEstado('ERR-001', 'error', 'Poblacion no encontrada');
-      }
-    }else{
-        $this->estructura_api->setEstado('ERR-001', 'error' , $validations->error());
+               $this->estructura_api->setResultado($population);
+               $this->estructura_api->setEstado('SUC-001', 'success', 'Poblacion Actualizado correctamente');
+           } else {
+               $this->estructura_api->setEstado('ERR-000', 'error', 'no existe esta Poblacion');
+           }
+       } else {
+           $this->estructura_api->setEstado('ERR-000', 'error', $validaciones->errors());
+       }
+       return response()->json($this->estructura_api->toResponse(null));
 
-    }
-    return response()->json($this->estructura_api->toResponse(null));
-    }
-
+       }
     /**
      * Remove the specified resource from storage.
      *
@@ -156,7 +156,7 @@ class populationsController extends Controller
     $this->estructura_api->setResultado($population);
     $this->estructura_api->setEstado('SUC-001', 'sucesss', 'Poblacion eliminada Correctamente');
      }else{
-    $this->estructura_api->setEstado('ERR-001', 'error', 'Poblacion no Encontrada');
+    $this->estructura_api->setEstado('ERR-000', 'error', 'Poblacion no Encontrada');
     $this->estructura_api->setResultado(null);
      }
      return response()->json($this->estructura_api->toResponse(null));

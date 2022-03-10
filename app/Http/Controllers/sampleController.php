@@ -46,9 +46,8 @@ class sampleController extends Controller
           $sample->average          = $request->average;
 
           $sample->save();
-
+          $this->estructura_api->setResultado($sample);
           $this->estructura_api->setEstado('SUC-001', 'sucesss', 'Muestra Registrada Correctamente');
-          $this->estructura_api->setRespuesta($sample);
       }else{
           $this->estructura_api->setEstado("ERR-00", 'error', $validation->error());
           $this->estructura_api->setResultado(null);
@@ -65,7 +64,7 @@ class sampleController extends Controller
     public function show($id_sample)
     {
      $sample = Sample::where('id_sample', $id_sample)
-            ->firts();
+            ->first();
 
      if(isset($sample)){
          $this->estructura_api->setResultado($sample);
@@ -101,6 +100,7 @@ class sampleController extends Controller
 
      ]);
      if(!$validation->fails()){
+
         $sample = Sample::find($id_sample);
 
      if(isset($sample)){
@@ -109,15 +109,17 @@ class sampleController extends Controller
         $sample->analysis_id    = $request->analysis_id;
         $sample->average        = $request->average;
 
+        $sample->save();
+
 
     $this->estructura_api->setResultado($sample);
     $this->estructura_api->setEstado('SUC-001', 'sucess', 'Muestra Actualizada Correctamente');
 
      }else{
-         $this->estructura_api->setEstado('ERR-001', 'error', 'Muestra no Encontrada');
+         $this->estructura_api->setEstado('ERR-000', 'error', 'Muestra no Encontrada');
      }
      }else{
-     $this->estructura_api->setEstado('ERR-001', 'error', $validation->error());
+     $this->estructura_api->setEstado('ERR-000', 'error', $validation->error());
      }
      return response()->json($this->estructura_api->toResponse(null));
     }

@@ -37,7 +37,18 @@ class populationsController extends Controller
     public function store(Request $request)
     {
         $validations = Validator::make($request->all(),[
-           
+         "populated_center_id" => "required",
+         "ethnic_group_id"     => "required",
+         "population_type_id"  =>  "required",
+         "length"              => "required",
+         "latitude"            => "required",
+         "altitude"            => "required",
+         "photography"         => "required",
+         "inhabitants_number"  =>"required",
+         "surface_sources"     =>"required",
+         "underground_sources" => "required",
+         "catchment_type"      =>"required",
+
         ]);
 
         if(!$validations->fails()){

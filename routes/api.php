@@ -3,7 +3,8 @@
 use App\Http\Controllers\profileController;
 use App\Http\Controllers\sampleController;
 use App\Http\Controllers\userController;
-use App\Http\Controllers\PopulationsController;
+use App\Http\Controllers\populationsController;
+use App\Http\Controllers\measureController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,10 +27,17 @@ Route::put('/actualizar_muestra/{id_sample}', [sampleController::class, 'update'
 Route::delete('/eliminar_muestra/{id_sample}', [sampleController::class, 'destroy']);
 
 
-Route::get('/listar_poblaciones', [PopulationsController::class, 'index']);
+Route::get('/listar_poblaciones', [populationsController::class, 'index']);
 Route::post('/almacenar_poblaciones', [populationsController::class, 'store']);
 Route::get('/lista_poblacion/{id_population}', [populationsController::class, 'show']);
-Route::post('/actualizar_poblacion', [populationsController::class, 'update']);
-Route::delete('/eliminar_poblacion', [populationsController::class, 'destroy']);
+Route::put('/actualizar_poblacion/{id_population}', [populationsController::class, 'update']);
+Route::delete('/eliminar_poblacion/{id_population}', [populationsController::class, 'destroy']);
+
+Route::get('/listar_medidas', [measureController::class, 'index']);
+Route::post('/almacenar_medidas', [measureController::class, 'store']);
+Route::get('/lista_medida/{id_measure}', [measureController::class, 'show']);
+Route::put('/actualizar_medida/{id_measure}',[measureController::class,'update']);
+Route::delete('/eliminar_medida/{id_measure}',[measureController::class,'destroy']);
+
 
 

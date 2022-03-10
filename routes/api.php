@@ -56,6 +56,13 @@ Route::get('/listar_tipos_agua', [waterTypesController::class, 'index']);
 Route::get('/listar_grupos_etnicos', [ethnicGroupsController ::class, 'index']);
 Route::get('/listar_tipos_modulo', [ethnicGroupsController ::class, 'index']);
 
+Route::get('/listar_grupos_etnicos', [ethnicGroupsController ::class, 'index']);
+Route::get('/listar_grupos_etnicos', [ethnicGroupsController ::class, 'index']);
+
+
+
+
+
 
 // Route::get('/departments', [::class, 'index']);
 

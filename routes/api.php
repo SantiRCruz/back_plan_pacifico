@@ -11,6 +11,7 @@ use App\Http\Controllers\measureController;
 use App\Http\Controllers\municipalitiesController;
 use App\Http\Controllers\parametersController;
 use App\Http\Controllers\populatedCentersController;
+use App\Http\Controllers\sigInController;
 use App\Http\Controllers\waterTypesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -59,5 +60,5 @@ Route::get('/listar_grupos_etnicos', [ethnicGroupsController ::class, 'index']);
 Route::get('/listar_tipos_modulo', [ethnicGroupsController ::class, 'index']);
 
 
-// Route::get('/departments', [::class, 'index']);
+Route::post('/iniciar_sesion', [sigInController::class, 'sesion']);
 

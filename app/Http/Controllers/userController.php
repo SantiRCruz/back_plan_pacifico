@@ -21,10 +21,10 @@ class userController extends Controller
             ->join("profiles", "profile_id", "id_profile")->get();
 
         if (count($user) > 0) {
-            $this->estructura_api->setEstado('SUC-001', 'success', 'Usuario registrado correctamente');
+            $this->estructura_api->setEstado('SUC-001', 'success', 'Usuario registrado correctamentrre');
             $this->estructura_api->setResultado($user);
         } else {
-            $this->estructura_api->setResultado("No existen usuarios registrados");
+            $this->estructura_api->setEstado('ERR-000', 'error', 'No existen usuarios registrados');
         }
         return response()->json($this->estructura_api->toResponse(null));
     }
@@ -65,7 +65,7 @@ class userController extends Controller
             $user->identification     =      $request->identification;
             $user->phone_number       =      $request->phone_number;
             $user->email              =      $request->email;
-            $user->password           =      $request->password;
+            $user->password           =      md5($request->password);
             $user->profile_id         =      $request->profile_id;
             $user->user_nick          =      $request->user_nick;
 
@@ -88,15 +88,15 @@ class userController extends Controller
      */
     public function show($id_user)
     {
-    $user = User::where('id_user', $id_user)
-                ->first();
-    if(isset($user)){
-     $this->estructura_api->setResultado($user);
-    }else{
-        $this->estructura_api->setEstado('ERR-000', 'error', 'Usuario no Encontrado');
-        $this->estructura_api->setResultado(null);
-    }
-    return response()->json($this->estructura_api->toResponse(null));
+        $user = User::where('id_user', $id_user)
+            ->first();
+        if (isset($user)) {
+            $this->estructura_api->setResultado($user);
+        } else {
+            $this->estructura_api->setEstado('ERR-000', 'error', 'Usuario no Encontrado');
+            $this->estructura_api->setResultado(null);
+        }
+        return response()->json($this->estructura_api->toResponse(null));
     }
 
     /**
@@ -132,14 +132,14 @@ class userController extends Controller
         if (!$validations->fails()) {
             $user_modified = User::find($id_user);
             if (isset($user_modified)) {
-                $user_modified ->usernames            =          $request->usernames;
-                $user_modified ->user_last_names      =          $request->user_last_names;
-                $user_modified ->identification       =          $request->identification;
-                $user_modified ->phone_number         =          $request->phone_number;
-                $user_modified ->email                =          $request->email;
-                $user_modified ->password             =          $request->password;
-                $user_modified ->profile_id           =          $request->profile_id;
-                $user_modified ->user_nick            =          $request->user_nick;
+                $user_modified->usernames            =          $request->usernames;
+                $user_modified->user_last_names      =          $request->user_last_names;
+                $user_modified->identification       =          $request->identification;
+                $user_modified->phone_number         =          $request->phone_number;
+                $user_modified->email                =          $request->email;
+                $user_modified->password             =          $request->password;
+                $user_modified->profile_id           =          $request->profile_id;
+                $user_modified->user_nick            =          $request->user_nick;
 
                 $user_modified->save();
                 $this->estructura_api->setResultado($user_modified);
@@ -162,14 +162,14 @@ class userController extends Controller
      */
     public function destroy($id_user)
     {
-     $user = User::find($id_user);
-     if(isset($user)){
-        $user->delete();
-    $this->estructura_api->setResultado($user);
-    $this->estructura_api->setEstado('SUC-001', 'sucess', 'Usuario eliminado correctamente');
-     }else{
-         $this->estructura_api->setEstado('ERR-000', 'error', 'Usuario no encontrado');
-     }
-      return response()->json($this->estructura_api->toResponse(null));
+        $user = User::find($id_user);
+        if (isset($user)) {
+            $user->delete();
+            $this->estructura_api->setResultado($user);
+            $this->estructura_api->setEstado('SUC-001', 'sucess', 'Usuario eliminado correctamente');
+        } else {
+            $this->estructura_api->setEstado('ERR-000', 'error', 'Usuario no encontrado');
+        }
+        return response()->json($this->estructura_api->toResponse(null));
     }
 }

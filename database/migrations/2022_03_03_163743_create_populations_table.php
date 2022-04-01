@@ -17,7 +17,6 @@ class CreatePopulationsTable extends Migration
             $table->id('id_population');
             $table->unsignedBigInteger('populated_center_id')->nullable();
             $table->unsignedBigInteger('ethnic_group_id')->nullable();
-            $table->unsignedBigInteger('population_type_id')->nullable();
             $table->string('length', 100);
             $table->string('latitude', 100);
             $table->string('altitude', 100);
@@ -28,7 +27,6 @@ class CreatePopulationsTable extends Migration
             $table->string('catchment_type', 100);
             $table->foreign('populated_center_id')->references('id_populated_center')->on('populated_centers')->onDelete('set null');
             $table->foreign('ethnic_group_id')->references('id_ethnic_group')->on('ethnic_groups')->onDelete('set null');
-            $table->foreign('population_type_id')->references('id_population_type')->on('population_types')->onDelete('set null');
             $table->timestamps();
         });
     }

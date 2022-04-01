@@ -15,7 +15,19 @@ class populationsController extends Controller
      */
     public function index()
     {
-        return Population::all();
+        $population = Population::join('populated_centers','populated_center_id','id_populated_center')
+        ->join('ethnic_groups','ethnic_group_id','id_ethnic_group')
+        ->join('municipalities','municipality_id','id_municipality')
+        ->join('departments','department_id','id_department')
+        ->get();
+        if (count($population) > 0) {
+            $this->estructura_api->setEstado('SUC-001', 'success', 'Poblaciones encontradas');
+            $this->estructura_api->setResultado($population);
+        } else {
+            $this->estructura_api->setEstado('INF-001', 'INFO', 'No hay poblaciones');
+            $this->estructura_api->setResultado($population);
+        }
+        return response()->json($this->estructura_api->ToResponse(null));
     }
 
     /**
@@ -37,41 +49,45 @@ class populationsController extends Controller
     public function store(Request $request)
     {
         $validations = Validator::make($request->all(), [
-         'populated_center_id' => 'required',
+         'populated_center_id' => 'required|unique:populations',
          'ethnic_group_id'     => 'required',
-         'population_type_id'  =>  'required',
-         'length'              => 'required|unique:populations',
-         'latitude'            => 'required|unique:populations',
-         'altitude'           => 'required|unique:populations',
+         'length'              => 'required',
+         'latitude'            => 'required',
+         'altitude'            => 'required',
          'photography'         => 'required',
-         'inhabitants_number'  =>'required',
-         'surface_sources'     =>'required',
+         'inhabitants_number'  => 'required',
+         'surface_sources'     => 'required',
          'underground_sources' => 'required',
-         'catchment_type'      =>'required'
+         'catchment_type'      => 'required'
 
         ]);
 
         if(!$validations->fails()){
-            $population = new Population;
-            $population->populated_center_id  = $request ->populated_center_id;
-            $population->ethnic_group_id      = $request ->ethnic_group_id;
-            $population->population_type_id   = $request ->population_type_id;
-            $population->length               = $request ->length;
-            $population->latitude             = $request ->latitude;
-            $population->altitude             = $request -> altitude;
-            $population->photography          = $request ->photography;
-            $population->inhabitants_number   = $request ->inhabitants_number;
-            $population->surface_sources      = $request ->surface_sources;
-            $population->underground_sources  = $request ->underground_sources;
-            $population->catchment_type       = $request ->catchment_type;
+            $populationSaved = new Population;
+            $populationSaved->populated_center_id  = $request ->populated_center_id;
+            $populationSaved->ethnic_group_id      = $request ->ethnic_group_id;
+            $populationSaved->length               = $request ->length;
+            $populationSaved->latitude             = $request ->latitude;
+            $populationSaved->altitude             = $request -> altitude;
+            $populationSaved->photography          = $request ->photography;
+            $populationSaved->inhabitants_number   = $request ->inhabitants_number;
+            $populationSaved->surface_sources      = $request ->surface_sources;
+            $populationSaved->underground_sources  = $request ->underground_sources;
+            $populationSaved->catchment_type       = $request ->catchment_type;
 
-            $population->save();
+            $populationSaved->save();
+            $population = Population::join('populated_centers','populated_center_id','id_populated_center')
+            ->join('ethnic_groups','ethnic_group_id','id_ethnic_group')
+            ->join('municipalities','municipality_id','id_municipality')
+            ->join('departments','department_id','id_department')
+            ->where('id_population', $populationSaved->id_population)
+            ->get();
             $this->estructura_api->setResultado($population);
             $this->estructura_api->setEstado('SUC-001', 'sucess', 'Poblacion Guardada Correctamente');
 
         }else{
-            $this->estructura_api->setEstado('ERR-000', 'error', $validations->errors());
-            $this->estructura_api->setResultado(null);
+            $this->estructura_api->setEstado('ERR-000', 'error', "Error al registrar por validaciones");
+            $this->estructura_api->setResultado([]);
         }
         return response()->json($this->estructura_api->toResponse(null));
     }
@@ -122,10 +138,9 @@ class populationsController extends Controller
         $validations = Validator::make($request->all(),[
             'populated_center_id' => 'required',
             'ethnic_group_id'     => 'required',
-            'population_type_id'  =>  'required',
-            'length'              => 'required|unique:populations',
-            'latitude'            => 'required|unique:populations',
-            'altitude'           => 'required|unique:populations',
+            'length'              => 'required',
+            'latitude'            => 'required',
+            'altitude'           => 'required',
             'photography'         => 'required',
             'inhabitants_number'  =>'required',
             'surface_sources'     =>'required',
@@ -139,7 +154,6 @@ class populationsController extends Controller
 
             $population->populated_center_id  = $request ->populated_center_id;
             $population->ethnic_group_id      = $request ->ethnic_group_id;
-            $population->population_type_id   = $request ->population_type_id;
             $population->length               = $request ->length;
             $population->latitude             = $request ->latitude;
             $population->altitude             = $request -> altitude;
@@ -151,7 +165,7 @@ class populationsController extends Controller
 
             $population->save();
 
-               $this->estructura_api->setResultado($population);
+               $this->estructura_api->setResultado([$population]);
                $this->estructura_api->setEstado('SUC-001', 'success', 'Poblacion Actualizado correctamente');
            } else {
                $this->estructura_api->setEstado('ERR-000', 'error', 'no existe esta Poblacion');
@@ -175,7 +189,6 @@ class populationsController extends Controller
      if(isset($population)){
          $population->delete();
 
-    $this->estructura_api->setResultado($population);
     $this->estructura_api->setEstado('SUC-001', 'sucesss', 'Poblacion eliminada Correctamente');
      }else{
     $this->estructura_api->setEstado('ERR-000', 'error', 'Poblacion no Encontrada');

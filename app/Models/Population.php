@@ -19,9 +19,6 @@ class Population extends Model
     public function ethinicGroup(){
         return $this->belongsTo('App\Models\EthinicGroup','ethnic_group_id','id_ethnic_group');
     }
-    public function populationType(){
-        return $this->belongsTo('App\Models\PopulationType','population_type_id','id_population_type');
-    }
     public function analysis(){
         return $this->hasMany('App\Models\Sample','population_id','id_population');
     }

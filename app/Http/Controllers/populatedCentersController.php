@@ -8,10 +8,16 @@ use Illuminate\Http\Request;
 class populatedCentersController extends Controller
 {
     //
-    public function index()
+    public function show($id_municipality)
     {
-        $populations_center = PopulationCenters::get();
-        $this->estructura_api->setResultado($populations_center);
-        return response()->json($this->estructura_api->toResponse(null));
+        $populated_centers = PopulationCenters::join('municipalities','municipality_id','id_municipality')
+        ->where('id_municipality',$id_municipality)
+        ->get();
+        if (count($populated_centers)> 0) {
+            $this->estructura_api->setResultado($populated_centers);
+        } else {
+            $this->estructura_api->setEstado('INF-001', 'INFO', 'No hay Centros Poblados');
+        }
+        return response()->json($this->estructura_api->ToResponse(null));
     }
 }

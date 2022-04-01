@@ -24,14 +24,15 @@ class sigInController extends Controller
             if (isset($user)) {
                 $data_user = new stdClass;
                 $data_user->user = $user;
-                // $data_user->profile = $user->profile;
-                $this->estructura_api->setResultado($data_user);
+                $data_user->profile = $user->profile;
+                $this->estructura_api->setResultado([$data_user->user]);
             } else {
-                // 
                 $this->estructura_api->setEstado('ERR-000', 'error', 'Usuario o contraseña incorrectos');
+                $this->estructura_api->setResultado([]);
             }
         } else {
             $this->estructura_api->setEstado('ERR-000', 'error', $validations->errors());
+            $this->estructura_api->setResultado([]);
         }
         return response()->json($this->estructura_api->toResponse(null));
     }

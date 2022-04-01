@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Measure;
 use Illuminate\Support\Facades\Validator;
+use stdClass;
+
 
 class measureController extends Controller
 {
@@ -15,8 +17,8 @@ class measureController extends Controller
      */
     public function index()
     {
-        return measure::all();
     }
+    
 
     /**
      * Show the form for creating a new resource.

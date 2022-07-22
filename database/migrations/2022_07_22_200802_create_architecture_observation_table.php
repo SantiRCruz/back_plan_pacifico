@@ -14,8 +14,14 @@ class CreateArchitectureObservationTable extends Migration
     public function up()
     {
         Schema::create('architecture_observation', function (Blueprint $table) {
-            $table->id('');
-
+            $table->id('id_architecture_observation');
+            $table->unsignedBigInteger('architecture_id')->nullable();  
+            $table->string('username_house');
+            $table->string('latitude', 100);
+            $table->string('altitude', 100);
+            $table->string('type_house');
+            $table->string('accessibility');
+            $table->foreign('architecture_id')->references('id_architecture')->on('architecture')->onDelete('set null');
             $table->timestamps();
         });
     }

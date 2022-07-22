@@ -17,7 +17,7 @@ class analysisController extends Controller
          'water_type_id'    => 'required',
          'date'             => 'required',
          'hour'             => 'required',
-         'sample_type'      =>'required'
+         'sample_type'      => 'required'
         ]);
 
         if(!$validations->fails()){

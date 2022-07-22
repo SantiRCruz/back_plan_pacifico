@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Population;
+use App\Models\population_ethnic;
 use Illuminate\Support\Facades\Validator;
 
 class populationsController extends Controller
@@ -50,7 +51,7 @@ class populationsController extends Controller
     {
         $validations = Validator::make($request->all(), [
          'populated_center_id' => 'required|unique:populations',
-         'ethnic_group_id'     => 'required',
+         'ethnic_groups'     => 'required|array',
          'length'              => 'required',
          'latitude'            => 'required',
          'altitude'            => 'required',
@@ -59,13 +60,12 @@ class populationsController extends Controller
          'surface_sources'     => 'required',
          'underground_sources' => 'required',
          'catchment_type'      => 'required'
-
         ]);
+
 
         if(!$validations->fails()){
             $populationSaved = new Population;
             $populationSaved->populated_center_id  = $request ->populated_center_id;
-            $populationSaved->ethnic_group_id      = $request ->ethnic_group_id;
             $populationSaved->length               = $request ->length;
             $populationSaved->latitude             = $request ->latitude;
             $populationSaved->altitude             = $request -> altitude;
@@ -74,10 +74,20 @@ class populationsController extends Controller
             $populationSaved->surface_sources      = $request ->surface_sources;
             $populationSaved->underground_sources  = $request ->underground_sources;
             $populationSaved->catchment_type       = $request ->catchment_type;
+         
 
             $populationSaved->save();
+
+           
+            for($i=0;$i<sizeof($request->ethnic_groups);$i++){
+                $population_ethnic = new population_ethnic;
+                $population_ethnic->populations_id   =$populationSaved ->id_population;
+                $population_ethnic->ethnic_group_id =$request->ethnic_groups[$i];
+                $population_ethnic->save();
+            }
+         
+
             $population = Population::join('populated_centers','populated_center_id','id_populated_center')
-            ->join('ethnic_groups','ethnic_group_id','id_ethnic_group')
             ->join('municipalities','municipality_id','id_municipality')
             ->join('departments','department_id','id_department')
             ->where('id_population', $populationSaved->id_population)
@@ -137,7 +147,7 @@ class populationsController extends Controller
     {
         $validations = Validator::make($request->all(),[
             'populated_center_id' => 'required',
-            'ethnic_group_id'     => 'required',
+            'ethnic_groups'     => 'required|array',
             'length'              => 'required',
             'latitude'            => 'required',
             'altitude'           => 'required',
@@ -153,7 +163,7 @@ class populationsController extends Controller
            if (isset($population)) {
 
             $population->populated_center_id  = $request ->populated_center_id;
-            $population->ethnic_group_id      = $request ->ethnic_group_id;
+            // $population->ethnic_groups      = $request ->ethnic_groups;
             $population->length               = $request ->length;
             $population->latitude             = $request ->latitude;
             $population->altitude             = $request -> altitude;
@@ -164,6 +174,20 @@ class populationsController extends Controller
             $population->catchment_type       = $request ->catchment_type;
 
             $population->save();
+            $population_ethnic = population_ethnic::where('populations_id', $id_population)
+            ->get();
+
+            for($i=0;$i<sizeof($population_ethnic);$i++){
+            $population = population_ethnic::find($population_ethnic[$i]->id_population_ethnics);
+            $population->delete();
+            }
+
+            for($i=0;$i<sizeof($request->ethnic_groups);$i++){
+                $population_ethnic = new population_ethnic;
+                $population_ethnic->populations_id   =$id_population;
+                $population_ethnic->ethnic_group_id =$request->ethnic_groups[$i];
+                $population_ethnic->save();
+            }
 
                $this->estructura_api->setResultado([$population]);
                $this->estructura_api->setEstado('SUC-001', 'success', 'Poblacion Actualizado correctamente');

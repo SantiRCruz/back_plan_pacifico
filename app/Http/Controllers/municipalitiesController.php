@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class municipalitiesController extends Controller
 {
+    public function index()
+    {
+        $municipalities = Municipality::get();
+        $this->estructura_api->setResultado($municipalities);
+        return response()->json($this->estructura_api->toResponse(null));
+    }
+
     public function show($id_department)
     {
         $municipalities = Municipality::join('departments','department_id','id_department')

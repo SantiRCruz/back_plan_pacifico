@@ -59,8 +59,10 @@ Route::get('/listar_analisis_poblacion/{id_population}', [analysisController::cl
 //RUTAS DATOS PARAMETRIZADOS
 Route::get('/listar_departments', [departmentsController::class, 'index']);
 Route::get('/listar_caracteristicas', [featuresController::class, 'index']);
+Route::get('/listar_municipios', [municipalitiesController::class, 'index']);
 Route::get('/listar_municipios/{id_department}', [municipalitiesController::class, 'show']);
 Route::get('/listar_parametros', [parametersController::class, 'index']);
+Route::get('/listar_centros_poblados', [populatedCentersController::class, 'index']);
 Route::get('/listar_centros_poblados/{id_municipality}', [populatedCentersController::class, 'show']);
 Route::get('/listar_tipos_agua', [waterTypesController::class, 'index']);
 Route::get('/listar_grupos_etnicos', [ethnicGroupsController ::class, 'index']);

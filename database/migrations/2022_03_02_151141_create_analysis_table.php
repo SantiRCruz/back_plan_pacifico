@@ -21,7 +21,10 @@ class CreateAnalysisTable extends Migration
             $table->unsignedBigInteger('water_type_id')->nullable();
             $table->string('date', 200);
             $table->string('hour', 100);
-            $table->string('sample_type', 100);
+            $table->string('sample_type', 100);         
+            $table->string('surface_sources', 100);
+            $table->string('underground_sources', 100);
+            $table->string('catchment_type', 100);
             $table->timestamps();
         });
     }

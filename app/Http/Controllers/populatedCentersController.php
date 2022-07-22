@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class populatedCentersController extends Controller
 {
+    public function index()
+    {
+        $populated_centers = PopulationCenters::get();
+        $this->estructura_api->setResultado($populated_centers);
+        return response()->json($this->estructura_api->toResponse(null));
+    }
+
     //
     public function show($id_municipality)
     {

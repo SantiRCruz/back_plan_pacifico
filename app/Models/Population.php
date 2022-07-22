@@ -13,13 +13,16 @@ class Population extends Model
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
-    public function populatedCenter(){
-        return $this->belongsTo('App\Models\PopulatedCenter','populated_center_id','id_populated_center');
-    }
-    public function ethinicGroup(){
-        return $this->belongsTo('App\Models\EthinicGroup','ethnic_group_id','id_ethnic_group');
-    }
+    // public function populatedCenter(){
+    //     return $this->belongsTo('App\Models\PopulatedCenter','populated_center_id','id_populated_center');
+    // }
+
     public function analysis(){
         return $this->hasMany('App\Models\Sample','population_id','id_population');
     }
+
+    public function populationEthnic(){
+        return $this->hasMany('App\Models\population_ethnic','populations_id','id_population');
+    }
+
 }

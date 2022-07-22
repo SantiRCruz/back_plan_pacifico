@@ -10,7 +10,9 @@ class EthnicGroup extends Model
     protected $table = 'ethnic_groups';
     protected $primaryKey = 'id_ethnic_group';
 
-    public function population(){
-        return $this->hasMany('App\Models\Population','ethnic_group_id','id_ethnic_group');
+  
+
+    public function populationEthnic(){
+        return $this->hasMany('App\Models\population_ethnic','ethic_group_id','id_ethic_group');
     }
 }

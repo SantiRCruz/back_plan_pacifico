@@ -17,8 +17,8 @@ class CreatePopulationEthnicsTable extends Migration
             $table->id('id_population_ethnics');
             $table->unsignedBigInteger('populations_id');
             $table->unsignedBigInteger('ethnic_group_id');
-            $table->foreing('populations_id')->references('id_population')->on('populations')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('ethnic_group_id')->references('id_ethnic_group')->on('ethnic_groups')->onUpdate('cascade')->onDelete('cascade'); 
+
+            $table->foreign('ethnic_group_id')->references('id_ethnic_group')->on('ethnic_groups')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('populations_id')->references('id_population')->on('populations')->onDelete('cascade');
             $table->timestamps();
         });

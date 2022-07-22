@@ -14,7 +14,7 @@ class CreateArchitectureObservationTable extends Migration
     public function up()
     {
         Schema::create('architecture_observation', function (Blueprint $table) {
-            $table->id('');
+            $table->id('id_wi');
 
             $table->timestamps();
         });

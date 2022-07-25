@@ -56,10 +56,7 @@ class populationsController extends Controller
          'latitude'            => 'required',
          'altitude'            => 'required',
          'photography'         => 'required',
-         'inhabitants_number'  => 'required',
-         'surface_sources'     => 'required',
-         'underground_sources' => 'required',
-         'catchment_type'      => 'required'
+         'inhabitants_number'  => 'required'
         ]);
 
 
@@ -71,9 +68,7 @@ class populationsController extends Controller
             $populationSaved->altitude             = $request -> altitude;
             $populationSaved->photography          = $request ->photography;
             $populationSaved->inhabitants_number   = $request ->inhabitants_number;
-            $populationSaved->surface_sources      = $request ->surface_sources;
-            $populationSaved->underground_sources  = $request ->underground_sources;
-            $populationSaved->catchment_type       = $request ->catchment_type;
+       
          
 
             $populationSaved->save();
@@ -152,10 +147,7 @@ class populationsController extends Controller
             'latitude'            => 'required',
             'altitude'           => 'required',
             'photography'         => 'required',
-            'inhabitants_number'  =>'required',
-            'surface_sources'     =>'required',
-            'underground_sources' => 'required',
-            'catchment_type'      =>'required'
+            'inhabitants_number'  =>'required'
 
         ]);
         if (!$validations->fails()) {
@@ -169,9 +161,7 @@ class populationsController extends Controller
             $population->altitude             = $request -> altitude;
             $population->photography          = $request ->photography;
             $population->inhabitants_number   = $request ->inhabitants_number;
-            $population->surface_sources      = $request ->surface_sources;
-            $population->underground_sources  = $request ->underground_sources;
-            $population->catchment_type       = $request ->catchment_type;
+            
 
             $population->save();
             $population_ethnic = population_ethnic::where('populations_id', $id_population)

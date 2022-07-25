@@ -17,7 +17,10 @@ class analysisController extends Controller
          'water_type_id'    => 'required',
          'date'             => 'required',
          'hour'             => 'required',
-         'sample_type'      => 'required'
+         'sample_type'      => 'required',  
+         'surface_sources'     => 'required',
+         'underground_sources' => 'required',
+         'catchment_type'      => 'required'
         ]);
 
         if(!$validations->fails()){
@@ -29,6 +32,9 @@ class analysisController extends Controller
             $analysis->date             = $request -> date;
             $analysis->hour             = $request ->hour;
             $analysis->sample_type      = $request ->sample_type;
+            $analysis->surface_sources      = $request ->surface_sources;
+            $analysis->underground_sources  = $request ->underground_sources;
+            $analysis->catchment_type       = $request ->catchment_type;
 
             $analysis->save();
             $this->estructura_api->setResultado([$analysis]);

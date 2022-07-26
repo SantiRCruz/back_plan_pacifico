@@ -15,7 +15,7 @@ class CreateCharacterizationTable extends Migration
     {
         Schema::create('characterization', function (Blueprint $table) {
             $table->id('id_characterization');
-            $table->unsignedBigInteger('housing_rural_id');
+            $table->unsignedBigInteger('architecture_id');
             $table->string('respondent_name');
             $table->string('age ');
             $table->string('gender');
@@ -37,7 +37,7 @@ class CreateCharacterizationTable extends Migration
             $table->string('disabled_people');
 
             //foreing de la tabla population_ethnics
-            $table->foreign('housing_rural_id')->references('id_population_ethnics')->on('population_ethnics')->onDelete('set null');
+            $table->foreign('architecture_id')->references('id_architecture')->on('architecture')->onDelete('set null');
             $table->timestamps();
         });
     }

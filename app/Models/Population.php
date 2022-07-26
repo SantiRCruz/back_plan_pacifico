@@ -20,6 +20,9 @@ class Population extends Model
     public function analysis(){
         return $this->hasMany('App\Models\Sample','population_id','id_population');
     }
+    public function architecture(){
+        return $this->hasMany('App\Models\Architecture','population_id','id_population');
+    }
 
     public function populationEthnic(){
         return $this->hasMany('App\Models\population_ethnic','populations_id','id_population');

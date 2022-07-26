@@ -11,16 +11,16 @@ class analysisController extends Controller
     public function store(Request $request)
     {
         $validations = Validator::make($request->all(), [
-         'user_id'          => 'required',
-         'population_id'    => 'required',
-         'sample_type_id'   => 'required',
-         'water_type_id'    => 'required',
-         'date'             => 'required',
-         'hour'             => 'required',
-         'sample_type'      => 'required',  
-         'surface_sources'     => 'required',
-         'underground_sources' => 'required',
-         'catchment_type'      => 'required'
+         'user_id'              => 'required',
+         'population_id'        => 'required',
+         'sample_type_id'       => 'required',
+         'water_type_id'        => 'required',
+         'date'                 => 'required',
+         'hour'                 => 'required',
+         'sample_type'          => 'required',  
+         'surface_sources'      => 'required',
+         'underground_sources'  => 'required',
+         'catchment_type'       => 'required'
         ]);
 
         if(!$validations->fails()){

@@ -14,12 +14,28 @@ use App\Http\Controllers\populatedCentersController;
 use App\Http\Controllers\sigInController;
 use App\Http\Controllers\waterTypesController;
 use App\Http\Controllers\analysisController;
+use App\Http\Controllers\ArchitectureControler;
+use App\Http\Controllers\ArchitectureObservationControler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+//RUTAS ARCHITECTURE
+Route::post('/almacenar_architecture', [ArchitectureControler::class, 'store']);
+Route::get('/listar_architectures', [ArchitectureControler::class, 'index']);
+Route::put('/modificar_architecture/{id_architecture}', [ArchitectureControler::class, 'update']);
+Route::get('/mostrar_architecture/{id_architecture}', [ArchitectureControler::class, 'show']);
+Route::delete('/eliminar_architecture/{id_architecture}', [ArchitectureControler::class, 'destroy']);
+
+//RUTAS ARCHITECTURE_OBSERVATION
+Route::post('/almacenar_architecture_observation', [ArchitectureObservationControler::class, 'store']);
+Route::get('/listar_architecture_observation', [ArchitectureObservationControler::class, 'index']);
+Route::put('/modificar_architecture_observation/{id_architecture_observation}', [ArchitectureObservationControler::class, 'update']);
+Route::get('/mostrar_architecture_observation/{id_architecture_observation}', [ArchitectureObservationControler::class, 'show']);
+Route::delete('/eliminar_architecture_observation/{id_architecture_observation}', [ArchitectureObservationControler::class, 'destroy']);
 
 // RUTAS USUARIO
 Route::post('/almacenar_usuario', [userController::class, 'store']);

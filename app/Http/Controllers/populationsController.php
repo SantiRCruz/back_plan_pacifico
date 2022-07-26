@@ -17,7 +17,7 @@ class populationsController extends Controller
     public function index()
     {
         $population = Population::join('populated_centers','populated_center_id','id_populated_center')
-        ->join('ethnic_groups','ethnic_group_id','id_ethnic_group')
+        /* ->join('ethnic_groups','ethnic_group_id','id_ethnic_group') */
         ->join('municipalities','municipality_id','id_municipality')
         ->join('departments','department_id','id_department')
         ->get();
